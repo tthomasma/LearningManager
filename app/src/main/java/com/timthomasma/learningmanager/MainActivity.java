@@ -94,5 +94,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         Toast.makeText(this, "Clicked position: " + pos + " id: " + identifier, Toast.LENGTH_LONG).show();
         return "something";
+        //tt
     }
 }
