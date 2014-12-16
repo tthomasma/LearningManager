@@ -75,9 +75,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-
-
-        //code to start Google Earth goes here, with try-catch block in case it doesn't exist.
+        String nameOfClickedItem = getNameOfClickedItem(position, id);
+        //after context menu, code to start Google Earth goes here, with try-catch block in case it doesn't exist.
 //        if (position < 4) {
 //            Intent intent = new Intent(this, MathActivity.class);
 //            intent.putExtra("operation", items[position]);
@@ -86,8 +85,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //        else {
 //            Intent intent = new Intent(this, ReportActivity.class);
 //            startActivity(intent);
-//        Toast.makeText(this, "Clicked something", Toast.LENGTH_LONG).show();
 //        }
-        Toast.makeText(this, "Clicked position: " + position + " id: " + id, Toast.LENGTH_LONG).show();
+
+    }
+
+    String getNameOfClickedItem(int pos, long identifier) {
+
+
+        Toast.makeText(this, "Clicked position: " + pos + " id: " + identifier, Toast.LENGTH_LONG).show();
+        return "something";
     }
 }
