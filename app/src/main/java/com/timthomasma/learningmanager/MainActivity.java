@@ -33,19 +33,24 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     void setupdata() {
         LunchItem li;
         ArrayList<LunchItem> lunchDataList = new ArrayList<LunchItem>();
-//        lunch_data[0] = new LunchItem(R.drawable.detroit, "Detroit");
-//        lunch_data[1] = new LunchItem(R.drawable.hamburger, "Somewhere");
-//        lunch_data[2] = new LunchItem(R.drawable.detroit, "2Detroit");
-//        lunch_data[3] = new LunchItem(R.drawable.hamburger, "2Somewhere");
-//        lunch_data[4] = new LunchItem(R.drawable.detroit, "3Detroit");
-//        lunch_data[5] = new LunchItem(R.drawable.hamburger, "3Somewhere");
-//        lunch_data[6] = new LunchItem(R.drawable.detroit, "4Detroit");
-//        lunch_data[7] = new LunchItem(R.drawable.hamburger, "4Somewhere");
-//        lunch_data[8] = new LunchItem(R.drawable.pizza_slice, "5Somewhere");
         li = new LunchItem(R.drawable.detroit, "Detroit");
         lunchDataList.add(li);
         li = new LunchItem(R.drawable.hamburger, "Somewhere");
         lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.detroit, "2Detroit");
+//        lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.hamburger, "2Somewhere");
+//        lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.detroit, "3Detroit");
+//        lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.hamburger, "3Somewhere");
+//        lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.detroit, "4Detroit");
+//        lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.hamburger, "4Somewhere");
+//        lunchDataList.add(li);
+//        li = new LunchItem(R.drawable.pizza_slice, "5Somewhere");
+//        lunchDataList.add(li);
         LunchItem listOfLunch[] = new LunchItem[lunchDataList.size()];
         listOfLunch = lunchDataList.toArray(listOfLunch);
         lunch_data = listOfLunch;
@@ -75,7 +80,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        String nameOfClickedItem = getNameOfClickedItem(position, id);
+        String nameOfClickedItem = lunch_data[position].getTitle();
+        Toast.makeText(this, "Clicked on '" + nameOfClickedItem + "'", Toast.LENGTH_LONG).show();
+
         //after context menu, code to start Google Earth goes here, with try-catch block in case it doesn't exist.
 //        if (position < 4) {
 //            Intent intent = new Intent(this, MathActivity.class);
@@ -89,11 +96,4 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     }
 
-    String getNameOfClickedItem(int pos, long identifier) {
-
-
-        Toast.makeText(this, "Clicked position: " + pos + " id: " + identifier, Toast.LENGTH_LONG).show();
-        return "something";
-        //tt
-    }
 }
