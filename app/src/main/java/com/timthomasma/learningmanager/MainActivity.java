@@ -7,20 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+
+    LunchItem lunch_data[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LunchItem lunch_data[] = new LunchItem[]{
-                new LunchItem(R.drawable.detroit, "Detroit"),
-//                new LunchItem(R.drawable.hamburger, "Somewhere"),
-                new LunchItem(R.drawable.pizza_slice, "Somewhere"),};
-        // TODO put names of places into the database. Pictures can be handled like this, and same picture goes in Google Maps overlay
+        setupdata();
 
         CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_layout,
                 lunch_data);
@@ -29,6 +28,28 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         listView.setOnItemClickListener(this);
         listView.setAdapter(adapter);
 
+    }
+
+    void setupdata() {
+        LunchItem li;
+        ArrayList<LunchItem> lunchDataList = new ArrayList<LunchItem>();
+//        lunch_data[0] = new LunchItem(R.drawable.detroit, "Detroit");
+//        lunch_data[1] = new LunchItem(R.drawable.hamburger, "Somewhere");
+//        lunch_data[2] = new LunchItem(R.drawable.detroit, "2Detroit");
+//        lunch_data[3] = new LunchItem(R.drawable.hamburger, "2Somewhere");
+//        lunch_data[4] = new LunchItem(R.drawable.detroit, "3Detroit");
+//        lunch_data[5] = new LunchItem(R.drawable.hamburger, "3Somewhere");
+//        lunch_data[6] = new LunchItem(R.drawable.detroit, "4Detroit");
+//        lunch_data[7] = new LunchItem(R.drawable.hamburger, "4Somewhere");
+//        lunch_data[8] = new LunchItem(R.drawable.pizza_slice, "5Somewhere");
+        li = new LunchItem(R.drawable.detroit, "Detroit");
+        lunchDataList.add(li);
+        li = new LunchItem(R.drawable.hamburger, "Somewhere");
+        lunchDataList.add(li);
+        LunchItem listOfLunch[] = new LunchItem[lunchDataList.size()];
+        listOfLunch = lunchDataList.toArray(listOfLunch);
+        lunch_data = listOfLunch;
+        // TODO put names of places into the database. Pictures can be handled like this, and same picture goes in Google Maps overlay
     }
 
     @Override
@@ -67,6 +88,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //            startActivity(intent);
 //        Toast.makeText(this, "Clicked something", Toast.LENGTH_LONG).show();
 //        }
-        Toast.makeText(this, "Clicked something", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Clicked position: " + position + " id: " + id, Toast.LENGTH_LONG).show();
     }
 }
