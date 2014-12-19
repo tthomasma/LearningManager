@@ -6,13 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener, PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private final static int FLY = 1;
     private final static int SCRAMBLE = 2;
@@ -22,7 +23,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private final static int TEXTIMAGE = 6;
     private final static int IMAGETEXT = 7;
     PlaceItem lunch_data[];
-    private PopupMenu popupMenu;
+    String nameOfClickedItem;
+    String activityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
         listView.setAdapter(adapter);
-        popupMenu = new PopupMenu(this, findViewById(R.id.listview));
-        popupMenu.getMenu().add(Menu.NONE, FLY, Menu.NONE, "Fly on Google Earth");
-        popupMenu.getMenu().add(Menu.NONE, SCRAMBLE, Menu.NONE, "Word Scramble");
-        popupMenu.getMenu().add(Menu.NONE, BALLOON, Menu.NONE, "Balloon Boy");
-        popupMenu.setOnMenuItemClickListener(this);
+
     }
 
     void setupdata() {
@@ -81,11 +79,31 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        String nameOfClickedItem = lunch_data[position].getTitle();
-        popupMenu.show();
-//        Toast.makeText(this, "Clicked on '" + nameOfClickedItem + "'", Toast.LENGTH_SHORT).show();
+        nameOfClickedItem = lunch_data[position].getTitle();
+        PopupMenu popup = new PopupMenu(MainActivity.this, view);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater()
+                .inflate(R.menu.popup_menu, popup.getMenu());
 
-        //after context menu, code to start Google Earth goes here, with try-catch block in case it doesn't exist.
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                activityName = "" + item.getTitleCondensed();
+                goThere();
+                return true;
+            }
+        });
+
+        popup.show(); //showing popup menu
+    }
+
+    void goThere() {
+        Toast.makeText(
+                MainActivity.this,
+                "You chose: " + activityName + " " + nameOfClickedItem,
+                Toast.LENGTH_SHORT
+        ).show();
+        //after popup menu, code to start Google Earth goes here, with try-catch block in case it doesn't exist.
 //        if (position < 4) {
 //            Intent intent = new Intent(this, MathActivity.class);
 //            intent.putExtra("operation", items[position]);
@@ -95,36 +113,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //            Intent intent = new Intent(this, ReportActivity.class);
 //            startActivity(intent);
 //        }
-
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        Toast.makeText(this, "Picked " + item.getItemId(), Toast.LENGTH_SHORT).show();
-        switch (item.getItemId()) {
-            case FLY:
-//                tv.setText("ONE");
-                break;
-            case SCRAMBLE:
-//                tv.setText("TWO");
-                break;
-            case BALLOON:
-//                tv.setText("THREE");
-                break;
-            case SOUNDTEXT:
-//                tv.setText("SOUNDTEXT");
-                break;
-            case SOUNDIMAGE:
-//                tv.setText("SOUNDIMAGE");
-                break;
-            case TEXTIMAGE:
-//                tv.setText("TEXTIMAGE");
-                break;
-            case IMAGETEXT:
-//                tv.setText("TEXTIMAGE");
-                break;
-        }
-        return false;
-    }
 
 }
