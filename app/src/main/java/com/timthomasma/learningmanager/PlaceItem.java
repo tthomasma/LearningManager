@@ -3,7 +3,7 @@ package com.timthomasma.learningmanager;
 /**
  * Created by Tim on 12/16/2014.
  */
-public class LunchItem {
+public class PlaceItem {
     public int icon;
     public String title;
 
@@ -23,7 +23,7 @@ public class LunchItem {
         this.title = title;
     }
 
-    public LunchItem(int icon, String title) {
+    public PlaceItem(int icon, String title) {
         super();
         this.icon = icon;
         this.title = title;

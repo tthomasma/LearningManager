@@ -7,13 +7,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener, PopupMenu.OnMenuItemClickListener {
 
-    LunchItem lunch_data[];
+    private final static int FLY = 1;
+    private final static int SCRAMBLE = 2;
+    private final static int BALLOON = 3;
+    private final static int SOUNDTEXT = 4;
+    private final static int SOUNDIMAGE = 5;
+    private final static int TEXTIMAGE = 6;
+    private final static int IMAGETEXT = 7;
+    PlaceItem lunch_data[];
+    private PopupMenu popupMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,31 +36,23 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
         listView.setAdapter(adapter);
-
+        popupMenu = new PopupMenu(this, findViewById(R.id.listview));
+        popupMenu.getMenu().add(Menu.NONE, FLY, Menu.NONE, "Fly on Google Earth");
+        popupMenu.getMenu().add(Menu.NONE, SCRAMBLE, Menu.NONE, "Word Scramble");
+        popupMenu.getMenu().add(Menu.NONE, BALLOON, Menu.NONE, "Balloon Boy");
+        popupMenu.setOnMenuItemClickListener(this);
     }
 
     void setupdata() {
-        LunchItem li;
-        ArrayList<LunchItem> lunchDataList = new ArrayList<LunchItem>();
-        li = new LunchItem(R.drawable.detroit, "Detroit");
+        PlaceItem li;
+        ArrayList<PlaceItem> lunchDataList = new ArrayList<PlaceItem>();
+        li = new PlaceItem(R.drawable.detroit, "Detroit");
         lunchDataList.add(li);
-        li = new LunchItem(R.drawable.hamburger, "Somewhere");
+        li = new PlaceItem(R.drawable.afghanistan, "Afghanistan");
         lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.detroit, "2Detroit");
-//        lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.hamburger, "2Somewhere");
-//        lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.detroit, "3Detroit");
-//        lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.hamburger, "3Somewhere");
-//        lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.detroit, "4Detroit");
-//        lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.hamburger, "4Somewhere");
-//        lunchDataList.add(li);
-//        li = new LunchItem(R.drawable.pizza_slice, "5Somewhere");
-//        lunchDataList.add(li);
-        LunchItem listOfLunch[] = new LunchItem[lunchDataList.size()];
+        li = new PlaceItem(R.drawable.sydney, "Sydney, Australia");
+        lunchDataList.add(li);
+        PlaceItem listOfLunch[] = new PlaceItem[lunchDataList.size()];
         listOfLunch = lunchDataList.toArray(listOfLunch);
         lunch_data = listOfLunch;
         // TODO put names of places into the database. Pictures can be handled like this, and same picture goes in Google Maps overlay
@@ -81,7 +82,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         String nameOfClickedItem = lunch_data[position].getTitle();
-        Toast.makeText(this, "Clicked on '" + nameOfClickedItem + "'", Toast.LENGTH_LONG).show();
+        popupMenu.show();
+//        Toast.makeText(this, "Clicked on '" + nameOfClickedItem + "'", Toast.LENGTH_SHORT).show();
 
         //after context menu, code to start Google Earth goes here, with try-catch block in case it doesn't exist.
 //        if (position < 4) {
@@ -94,6 +96,35 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //            startActivity(intent);
 //        }
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(this, "Picked " + item.getItemId(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case FLY:
+//                tv.setText("ONE");
+                break;
+            case SCRAMBLE:
+//                tv.setText("TWO");
+                break;
+            case BALLOON:
+//                tv.setText("THREE");
+                break;
+            case SOUNDTEXT:
+//                tv.setText("SOUNDTEXT");
+                break;
+            case SOUNDIMAGE:
+//                tv.setText("SOUNDIMAGE");
+                break;
+            case TEXTIMAGE:
+//                tv.setText("TEXTIMAGE");
+                break;
+            case IMAGETEXT:
+//                tv.setText("TEXTIMAGE");
+                break;
+        }
+        return false;
     }
 
 }

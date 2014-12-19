@@ -11,14 +11,14 @@ import android.widget.TextView;
 /**
  * Created by Tim on 12/16/2014.
  */
-public class CustomAdapter extends ArrayAdapter<LunchItem> {
+public class CustomAdapter extends ArrayAdapter<PlaceItem> {
 
     private Context context;
-    private LunchItem[] data;
+    private PlaceItem[] data;
     private LayoutInflater layoutInflater;
 
     public CustomAdapter(Context context, int textViewResourceId,
-                         LunchItem[] lunch_data) {
+                         PlaceItem[] lunch_data) {
         super(context, textViewResourceId, lunch_data);
 
         // store constructor parameters
@@ -37,7 +37,7 @@ public class CustomAdapter extends ArrayAdapter<LunchItem> {
             row = this.layoutInflater.inflate(R.layout.custom_layout, null);
         }
         // extract data
-        LunchItem item = this.data[position];
+        PlaceItem item = this.data[position];
         // assign the caption
         TextView lunchTitle = (TextView) row.findViewById(R.id.textview);
         lunchTitle.setText(item.getTitle());
