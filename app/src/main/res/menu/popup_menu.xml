@@ -15,17 +15,17 @@
 
     <item
         android:id="@+id/soundtext"
-        android:title="Choose correct printed word that matches spoken word" />
+        android:title="Pick text to match sound" />
 
     <item
         android:id="@+id/soundimage"
-        android:title="Choose correct picture that matches spoken word" />
+        android:title="Pick picture to match sound" />
 
     <item
         android:id="@+id/textimage"
-        android:title="Choose correct picture that matches printed word" />
+        android:title="Pick picture to match text" />
 
     <item
         android:id="@+id/imagetext"
-        android:title="Choose correct printed word that matches picture." />
+        android:title="Pick text to match picture" />
 </menu>
