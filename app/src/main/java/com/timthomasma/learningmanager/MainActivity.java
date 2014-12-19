@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -15,14 +14,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
-    private final static int FLY = 1;
-    private final static int SCRAMBLE = 2;
-    private final static int BALLOON = 3;
-    private final static int SOUNDTEXT = 4;
-    private final static int SOUNDIMAGE = 5;
-    private final static int TEXTIMAGE = 6;
-    private final static int IMAGETEXT = 7;
-    PlaceItem lunch_data[];
+    private final static String FLY = "Fly on Google Earth";
+    private final static String SCRAMBLE = "Word Scramble";
+    private final static String BALLOON = "Balloon Boy";
+    private final static String SOUNDTEXT = "Pick Text to Match Sound";
+    private final static String SOUNDIMAGE = "Pick Picture to Match Sound";
+    private final static String TEXTIMAGE = "Pick Picture to Match Text";
+    private final static String IMAGETEXT = "Pick Text to Match Picture";
+    PlaceItem placeData[];
     String nameOfClickedItem;
     String activityName;
 
@@ -33,7 +32,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         setupdata();
 
         CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_layout,
-                lunch_data);
+                placeData);
 
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
@@ -52,7 +51,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         lunchDataList.add(li);
         PlaceItem listOfLunch[] = new PlaceItem[lunchDataList.size()];
         listOfLunch = lunchDataList.toArray(listOfLunch);
-        lunch_data = listOfLunch;
+        placeData = listOfLunch;
         // TODO put names of places into the database. Pictures can be handled like this, and same picture goes in Google Maps overlay
     }
 
@@ -79,7 +78,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        nameOfClickedItem = lunch_data[position].getTitle();
+        nameOfClickedItem = placeData[position].getTitle();
         PopupMenu popup = new PopupMenu(MainActivity.this, view);
         //Inflating the Popup using xml file
         popup.getMenuInflater()
@@ -98,22 +97,68 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     }
 
     void goThere() {
-        Toast.makeText(
-                MainActivity.this,
-                "You chose: " + activityName + " " + nameOfClickedItem,
-                Toast.LENGTH_SHORT
-        ).show();
-        //after popup menu, code to start Google Earth goes here, with try-catch block in case it doesn't exist.
-//        if (position < 4) {
-//            Intent intent = new Intent(this, MathActivity.class);
-//            intent.putExtra("operation", items[position]);
-//            startActivity(intent);
-//        }
-//        else {
-//            Intent intent = new Intent(this, ReportActivity.class);
-//            startActivity(intent);
-//        }
+        switch (activityName) {
+            case FLY: {
+//                send intent to Google Earth with geo description. How to do intents:
+//                    Intent intent = new Intent(this, MathActivity.class);
+//                    intent.putExtra("operation", items[position]);
+//                    startActivity(intent);
+                Toast.makeText(
+                        MainActivity.this,
+                        "Fly to: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+            case SCRAMBLE: {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Word scramble: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+            case BALLOON: {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Balloon Boy: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+            case SOUNDTEXT: {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Sound to text: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+            case SOUNDIMAGE: {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Sound to picture: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+            case TEXTIMAGE: {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Text to picture: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+            case IMAGETEXT: {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Picture to text: " + nameOfClickedItem,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            }
+
+        }
     }
-
-
 }
