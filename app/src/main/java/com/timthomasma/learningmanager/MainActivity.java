@@ -1,6 +1,9 @@
 package com.timthomasma.learningmanager;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,15 +102,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     void goThere() {
         switch (activityName) {
             case FLY: {
-//                send intent to Google Earth with geo description. How to do intents:
-//                    Intent intent = new Intent(this, MathActivity.class);
-//                    intent.putExtra("operation", items[position]);
-//                    startActivity(intent);
                 Toast.makeText(
                         MainActivity.this,
                         "Fly to: " + nameOfClickedItem,
                         Toast.LENGTH_SHORT
                 ).show();
+                flyTo(nameOfClickedItem);
                 break;
             }
             case SCRAMBLE: {
@@ -158,7 +158,40 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 ).show();
                 break;
             }
+        }
+    }
 
+    void flyTo(String placeName) {
+        //                send intent to Google Earth with geo description. How to do intents:
+//                    Intent intent = new Intent(this, MathActivity.class);
+//                    intent.putExtra("operation", items[position]);
+//                    startActivity(intent);
+
+        // the new intent we will launch
+        Intent myIntent = new Intent();
+
+        // send the intent directly to the google earth activity that can
+        // handle search
+        myIntent.setClassName("com.google.earth",
+                "com.google.earth.EarthActivity");
+
+        // we are doing a search query
+        myIntent.setAction(Intent.ACTION_SEARCH);
+
+        // change this address to any address you want to fly to
+        myIntent.putExtra(SearchManager.QUERY, placeName);
+
+        // always trap for ActivityNotFound in case Google earth is not on the device
+
+        try {
+            // launch google earth and fly to location
+            this.startActivity(myIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(
+                    MainActivity.this,
+                    "Sorry, Google Earth is not available on this machine.",
+                    Toast.LENGTH_SHORT
+            ).show();
         }
     }
 }
