@@ -27,11 +27,27 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     PlaceItem placeData[];
     String nameOfClickedItem;
     String activityName;
+    String returnedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // this is just to test that data can be received
+        String anythingInIntent = getIntent().getStringExtra("place");
+        if (anythingInIntent != null)
+            returnedData = anythingInIntent;
+        else
+            returnedData = "nothing";
+
+        Toast.makeText(
+                MainActivity.this,
+                returnedData,
+                Toast.LENGTH_SHORT
+        ).show();
+
+
         setupdata();
 
         CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_layout,
@@ -111,11 +127,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 break;
             }
             case SCRAMBLE: {
-                Toast.makeText(
-                        MainActivity.this,
-                        "Word scramble: " + nameOfClickedItem,
-                        Toast.LENGTH_SHORT
-                ).show();
+//                Toast.makeText(
+//                        MainActivity.this,
+//                        "Word scramble: " + nameOfClickedItem,
+//                        Toast.LENGTH_SHORT
+//                ).show();
+                scramble(nameOfClickedItem);
                 break;
             }
             case BALLOON: {
@@ -190,6 +207,40 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             Toast.makeText(
                     MainActivity.this,
                     "Sorry, Google Earth is not available on this machine.",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    void scramble(String placeName) {
+        //                send intent to Word Scramble. The code for starting Google Earth in
+        //                flyTo() uses explicit intent to start Earth. Use same approach for
+        //                other apps.
+
+        // the new intent we will launch
+        Intent myIntent = new Intent();
+
+        // send the intent directly to the learning activity activity
+        myIntent.setClassName("com.wordscramble_bad_mac",
+                "com.wordscramble_bad_mac.MainActivity");
+
+        // don't need this - starts MAIN action as default.
+        // myIntent.setAction(Intent.ACTION_SEARCH);
+
+        // change this to anything you wnat to send to the Word Scramble app
+        myIntent.putExtra("place", placeName);
+
+        // always trap for ActivityNotFound in case Google earth is not on the device
+
+        try {
+            // launch word scramble
+            this.startActivity(myIntent);
+            finish();
+
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(
+                    MainActivity.this,
+                    "Sorry, Word Scramble is not available on this machine.",
                     Toast.LENGTH_SHORT
             ).show();
         }
